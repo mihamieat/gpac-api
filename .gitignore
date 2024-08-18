@@ -1,0 +1,52 @@
+# Python Bytecode
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual Environment
+venv/
+env/
+.venv/
+.env/
+pyenv/
+Pipfile.lock
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Environment Variables
+.env
+
+# Distribution / Packaging
+*.egg-info/
+dist/
+build/
+
+# SQLite database files
+*.sqlite3
+*.db
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Pytest
+.cache/
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+*.hypothesis/
+
+# Old files
+ *_old*
