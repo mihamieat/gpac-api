@@ -1,13 +1,14 @@
 # Gpac API documentation
 ## Overview
-GpacAPI is a service for interacting with gpac application.
-See API documentation for details.
+GpacAPI is a service for interacting with the GPAC application.
+
+See the API documentation for details.
 ## Installation
 It is recommended to run the server in a separate environment.
 ```sh
 pip install -r requirements.txt
 ```
-## Run the server
+## Running the server
 ### In production
 ```sh
 fastapi run src/gpac_api/app/main.py --port 80
@@ -21,13 +22,13 @@ To run the server in a docker container.
 
 Create a Docker image.
 ```sh
-docker build -t gpac_api_image
+docker build -t gpac_api_image .
 ```
 Run the server container.
 ```sh
 docker run -d --name gpac_api_container -p 80:80 gpac_api_image
 ```
-## Contribute
+## Contributing
 ### pre-commit
 Pre-commit is a tool that helps developers automatically run checks and formatting on their code before they commit changes to a version control system like Git.
 #### Install
