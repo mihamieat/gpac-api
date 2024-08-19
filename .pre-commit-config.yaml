@@ -44,10 +44,8 @@ repos:
           language: system
           types: [python]
           require_serial: true
-      # -   id: pytest
-      #     name: pytest
-      #     entry: poetry run pytest
-      #     language: system
-      #     pass_filenames: false
-      #     always_run: true
-      #     types: [python]
+      -   id: pytest-mopngodb
+          name: Run pytest with MongoDB in a docker container
+          entry: ./unittest.sh
+          language: script
+          types: [python]
