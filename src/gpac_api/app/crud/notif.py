@@ -5,7 +5,7 @@ from fastapi import HTTPException
 
 from src.gpac_api.app.models.notif import NotifModel
 from src.gpac_api.app.schemas.notif import NotifResponseSchema
-from src.gpac_api.app.db.database import get_database
+from src.gpac_api.app.db.database import db
 from src.gpac_api.app.utils.logger import logger
 from src.gpac_api.app.utils.converters import convert_object_ids, str_to_object_id
 
@@ -24,7 +24,6 @@ async def create_notif(notif: NotifModel) -> NotifResponseSchema:
         None
     """
 
-    db = get_database()
     collection = db.notif
     new_notif = await collection.insert_one(notif.model_dump())
     created_notif = await collection.find_one({"_id": new_notif.inserted_id})
@@ -46,7 +45,6 @@ async def find_notif(notif_id: int) -> NotifResponseSchema:
     Raises:
         None
     """
-    db = get_database()
     collection = db.notif
     logger.debug("database ok")
     try:
