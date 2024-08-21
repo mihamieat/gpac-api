@@ -3,7 +3,6 @@
 
 import os
 
-from bson import ObjectId
 import pytest
 from fastapi.testclient import TestClient
 
@@ -30,21 +29,28 @@ def client():
 
 # notifs
 @pytest.fixture
-def notif_collection():
+async def notif_db():
     """
     Sets up a notification collection in the database for testing purposes.
 
     Returns:
-        Collection: The notification collection from the database.
+        Collection, ObjectId: The notification collection from the database and the\
+ inserted document's ID.
     """
-
     notif_collection_db = db["notif"]
-    notif_collection_db.insert_one(
+
+    # Insert a document and await the result
+    result = await notif_collection_db.insert_one(
         {
-            "_id": ObjectId(1),
             "recipients": ["string"],
             "gpus": ["string"],
             "mail_content": "string",
             "message_type": "info",
         }
     )
+
+    # Get the inserted document's ID
+    inserted_id = result.inserted_id
+
+    # Return the collection and the inserted document's ObjectId
+    return notif_collection_db, inserted_id
