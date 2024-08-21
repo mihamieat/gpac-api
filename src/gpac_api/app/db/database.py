@@ -1,14 +1,13 @@
 # -*- coding: utf-8 -*-
 """Database module"""
-import os
-
 from dotenv import load_dotenv, dotenv_values
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo import MongoClient
+from src.gpac_api.app.utils.envcheck import is_testing_env
 
 load_dotenv()
 
-if os.environ.get("TESTING").lower() not in ("true", "1", "yes"):
+if not is_testing_env():
     config = dotenv_values()
     DATABASE_USER = config.get("DATABASE_USER")
     DATABASE_PASSWORD = config.get("DATABASE_PASSWORD")

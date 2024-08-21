@@ -7,11 +7,13 @@ from bson import ObjectId
 import pytest
 from fastapi.testclient import TestClient
 
-from src.gpac_api.app.main import app
-from src.gpac_api.app.db.database import get_database
+from src.gpac_api.app import main
+from src.gpac_api.app.db import database
 
-os.environ["TESTING"] = "1"
-db = get_database()
+os.environ["TESTING"] = "TRUE"
+
+app = main.app
+db = database.db
 
 
 @pytest.fixture
