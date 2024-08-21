@@ -8,7 +8,7 @@ from pymongo import MongoClient
 
 load_dotenv()
 
-if os.environ.get("TESTING") not in ("true", "1", "yes"):
+if os.environ.get("TESTING").lower() not in ("true", "1", "yes"):
     config = dotenv_values()
     DATABASE_USER = config.get("DATABASE_USER")
     DATABASE_PASSWORD = config.get("DATABASE_PASSWORD")
@@ -23,16 +23,3 @@ if os.environ.get("TESTING") not in ("true", "1", "yes"):
 else:
     client = MongoClient("mongodb://tester:tester$@localhost:27017")
     db = client["testdb"]
-
-
-def get_database():
-    """
-    Retrieves the current database instance.
-
-    Args:
-        None
-
-    Returns:
-        object: The current database instance.
-    """
-    return db
