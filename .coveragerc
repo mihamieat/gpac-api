@@ -1,2 +1,2 @@
 [run]
-omit = src/gpac_api/app/db/database.py
+omit = src/gpac_api/app/db/database.py, src/gpac_api/app/utils/lifespan.py

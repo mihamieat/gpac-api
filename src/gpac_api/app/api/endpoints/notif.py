@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException
 
 from src.gpac_api.app.crud.notif import create_notif, find_notif
 from src.gpac_api.app.schemas.notif import NotifCreateSchema, NotifResponseSchema
+from src.gpac_api.app.utils.logger import logger
 
 
 router = APIRouter()
@@ -41,8 +42,8 @@ def get_notif(notif_id: str):
     Raises:
         HTTPException: Raised if the provided notification ID format is invalid.
     """
-
-    try:
-        return find_notif(notif_id)
-    except Exception as e:
-        raise HTTPException(status_code=404, detail="Notif not found") from e
+    logger.debug("notif_id: %s", notif_id)
+    notif = find_notif(notif_id)
+    if notif is None:
+        raise HTTPException(status_code=404, detail="Notif not found")
+    return notif
