@@ -1,18 +1,12 @@
 # -*- coding: utf-8 -*-
 """Test the main module."""
 
-import os
-
 import pytest
 from fastapi.testclient import TestClient
 
-from src.gpac_api.app import main
-from src.gpac_api.app.db import database
-
-os.environ["TESTING"] = "TRUE"
-
-app = main.app
-db = database.db
+from src.gpac_api.app.utils.testenv import TESTING  # noqa pylint: disable=W0611
+from src.gpac_api.app.main import app
+from src.gpac_api.app.db.database import db
 
 
 @pytest.fixture
@@ -29,7 +23,7 @@ def client():
 
 # notifs
 @pytest.fixture
-async def notif_db():
+def notif_db():
     """
     Sets up a notification collection in the database for testing purposes.
 
@@ -40,7 +34,7 @@ async def notif_db():
     notif_collection_db = db["notif"]
 
     # Insert a document and await the result
-    result = await notif_collection_db.insert_one(
+    result = notif_collection_db.insert_one(
         {
             "recipients": ["string"],
             "gpus": ["string"],

@@ -11,7 +11,7 @@ router = APIRouter()
 
 
 @router.post("/", response_model=NotifResponseSchema)
-async def new_notif(notif: NotifCreateSchema):
+def new_notif(notif: NotifCreateSchema):
     """
     Creates a new notification based on the provided notification data.
 
@@ -24,11 +24,11 @@ async def new_notif(notif: NotifCreateSchema):
     Raises:
         None
     """
-    return await create_notif(notif)
+    return create_notif(notif)
 
 
 @router.get("/{notif_id}", response_model=NotifResponseSchema)
-async def get_notif(notif_id: str):
+def get_notif(notif_id: str):
     """
     Retrieves a notification by its identifier.
 
@@ -43,6 +43,6 @@ async def get_notif(notif_id: str):
     """
 
     try:
-        return await find_notif(notif_id)
+        return find_notif(notif_id)
     except Exception as e:
-        raise HTTPException(status_code=400, detail="Invalid ID format") from e
+        raise HTTPException(status_code=404, detail="Notif not found") from e

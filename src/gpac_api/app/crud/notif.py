@@ -10,7 +10,7 @@ from src.gpac_api.app.utils.logger import logger
 from src.gpac_api.app.utils.converters import convert_object_ids, str_to_object_id
 
 
-async def create_notif(notif: NotifModel) -> NotifResponseSchema:
+def create_notif(notif: NotifModel) -> NotifResponseSchema:
     """
     Creates a new notification in the database.
 
@@ -25,14 +25,14 @@ async def create_notif(notif: NotifModel) -> NotifResponseSchema:
     """
 
     collection = db.notif
-    new_notif = await collection.insert_one(notif.model_dump())
-    created_notif = await collection.find_one({"_id": new_notif.inserted_id})
+    new_notif = collection.insert_one(notif.model_dump())
+    created_notif = collection.find_one({"_id": new_notif.inserted_id})
     created_item_dict = convert_object_ids(created_notif)
     logger.debug("Created notif: %s", created_item_dict)
     return created_item_dict
 
 
-async def find_notif(notif_id: int) -> NotifResponseSchema:
+def find_notif(notif_id: int) -> NotifResponseSchema:
     """
     Retrieves notification data from the database by its identifier.
 
@@ -53,6 +53,6 @@ async def find_notif(notif_id: int) -> NotifResponseSchema:
         raise HTTPException(
             status_code=400, detail="Invalid notification ID format"
         ) from e
-    found_notif = await collection.find_one({"_id": object_id})
+    found_notif = collection.find_one({"_id": object_id})
     logger.debug("Found notification %s", found_notif)
     return found_notif
