@@ -10,6 +10,18 @@ def test_get_notif(client, notif_db):
     assert response.status_code == 200
 
 
+def test_notice_not_found(client):
+    """Test notice not found."""
+    response = client.get(f"{ENDPOINT}/66c72cb4ddce5033850626b7")
+    assert response.status_code == 404
+
+
+def test_notif_wrong_id_format(client):
+    """Test notif wrong id format."""
+    response = client.get(f"{ENDPOINT}/wrong-id-format")
+    assert response.status_code == 400
+
+
 def test_create_notif(client):
     """Test create notif."""
     data = {

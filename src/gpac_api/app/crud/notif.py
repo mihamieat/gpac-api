@@ -32,7 +32,7 @@ def create_notif(notif: NotifModel) -> NotifResponseSchema:
     return created_item_dict
 
 
-def find_notif(notif_id: int) -> NotifResponseSchema:
+def find_notif(notif_id: str) -> NotifResponseSchema:
     """
     Retrieves notification data from the database by its identifier.
 
@@ -46,7 +46,6 @@ def find_notif(notif_id: int) -> NotifResponseSchema:
         None
     """
     collection = db.notif
-    logger.debug("database ok")
     try:
         object_id = str_to_object_id(notif_id)
     except Exception as e:
