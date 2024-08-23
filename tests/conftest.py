@@ -18,7 +18,9 @@ def client():
         TestClient: An instance of the FastAPI test client.
     """
 
-    return TestClient(app)
+    test_client = TestClient(app)
+    yield test_client
+    test_client.close()
 
 
 # notifs
