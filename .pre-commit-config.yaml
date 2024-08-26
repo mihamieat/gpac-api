@@ -44,7 +44,7 @@ repos:
           language: system
           types: [python]
           require_serial: true
-      -   id: pytest-mopngodb
+      -   id: pytest-mongodb
           name: Run pytest with MongoDB in a docker container
           entry: ./unittest.sh
           language: script
