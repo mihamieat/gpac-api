@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Test the main module."""
 
+from base64 import b64encode
 import pytest
 from fastapi.testclient import TestClient
 
@@ -50,3 +51,15 @@ def notif_db():
 
     # Return the collection and the inserted document's ObjectId
     return notif_collection_db, inserted_id
+
+
+@pytest.fixture
+def headers():
+    """
+    Fixture that provides authorization headers for testing.
+
+    Returns:
+        dict: A dictionary containing the Authorization header with basic credentials.
+    """
+    credentials = b64encode("eteph:$wordfi$h".encode()).decode("utf-8")
+    return {"Authorization": f"Basic {credentials}"}
