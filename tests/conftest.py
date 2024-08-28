@@ -24,6 +24,26 @@ def client():
     test_client.close()
 
 
+# insert test user in test db
+def user():
+    """
+    Create a test user in the database for testing purposes.
+
+    Returns:
+        Collection: The database collection reference for the "user" collection.
+    """
+    user_collection_db = db["user"]
+    user_collection_db.insert_one(
+        {
+            "username": "testuser",
+            "password": "testpassword",
+            "email": "testemail@testuser.com",
+            "description": "testdescription",
+        }
+    )
+    return user_collection_db
+
+
 # notifs
 @pytest.fixture
 def notif_db():
@@ -36,7 +56,6 @@ def notif_db():
     """
     notif_collection_db = db["notif"]
 
-    # Insert a document and await the result
     result = notif_collection_db.insert_one(
         {
             "recipients": ["string"],
@@ -46,10 +65,8 @@ def notif_db():
         }
     )
 
-    # Get the inserted document's ID
     inserted_id = result.inserted_id
 
-    # Return the collection and the inserted document's ObjectId
     return notif_collection_db, inserted_id
 
 
@@ -61,5 +78,6 @@ def headers():
     Returns:
         dict: A dictionary containing the Authorization header with basic credentials.
     """
-    credentials = b64encode("eteph:$wordfi$h".encode()).decode("utf-8")
+    user()
+    credentials = b64encode("testuser:testpassword".encode()).decode("utf-8")
     return {"Authorization": f"Basic {credentials}"}
