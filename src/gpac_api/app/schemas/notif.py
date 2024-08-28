@@ -20,9 +20,9 @@ class NotifCreateSchema(BaseModel):
     recipients: List[str]
     gpus: List[str]
     mail_content: Optional[str]
-    message_type: Literal[
-        "warning", "info", "error"
-    ] = "info"  # Optional with a default value
+    message_type: Literal["warning", "info", "error"] = (
+        "info"  # Optional with a default value
+    )
 
 
 class NotifResponseSchema(BaseModel):
