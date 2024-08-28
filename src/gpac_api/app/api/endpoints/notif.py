@@ -8,11 +8,10 @@ from fastapi.security import HTTPBasicCredentials
 from src.gpac_api.app.crud.notif import create_notif, find_notif
 from src.gpac_api.app.schemas.notif import NotifCreateSchema, NotifResponseSchema
 from src.gpac_api.app.utils.logger import logger
-from src.gpac_api.app.utils.security import CurrentUser, security
+from src.gpac_api.app.utils.security import verify_credentials, security
 
 
 router = APIRouter()
-current_user = CurrentUser()
 
 
 @router.post("/", response_model=NotifResponseSchema)
@@ -32,7 +31,7 @@ def new_notif(
     Raises:
         None
     """
-    current_user.verify_credentials(credentials)
+    verify_credentials(credentials)
     return create_notif(notif)
 
 
@@ -52,7 +51,7 @@ def get_notif(
     Raises:
         HTTPException: Raised if the provided notification ID format is invalid.
     """
-    current_user.verify_credentials(credentials)
+    verify_credentials(credentials)
     logger.debug("notif_id: %s", notif_id)
     notif = find_notif(notif_id)
     if notif is None:
