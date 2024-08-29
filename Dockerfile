@@ -1,4 +1,4 @@
-FROM python:3.10.12
+FROM python:3.11.6
 WORKDIR /code
 COPY ./requirements.txt /code/requirements.txt
 RUN pip install --upgrade setuptools
