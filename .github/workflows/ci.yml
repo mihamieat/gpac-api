@@ -1,4 +1,4 @@
-name: GPacAPI FastAPI CI/CD
+name: GPacAPI FastAPI CI
 'on':
   push:
     branches:
