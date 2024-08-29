@@ -67,7 +67,14 @@ jobs:
         with:
           mongodb-version: ${{ matrix.mongodb-version }}
       - name: Run Tests
-        run: poetry run pytest --cov=src tests/
-      - name: Read coverage
-        run: |
-          poetry run coverage html
+        run: poetry run pytest --cov=src tests/ --junitxml=junit.xml -o junit_family=legacy
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: junit.xml
+      - name: Upload test results to Codecov
+        if: ${{ !cancelled() }}
+        uses: codecov/test-results-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
