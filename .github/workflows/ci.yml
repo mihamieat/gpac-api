@@ -47,6 +47,9 @@ jobs:
         run: poetry build
   test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mongodb-version: ['5.0', '6.0', '7.0']
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -59,18 +62,12 @@ jobs:
           python -m pip install --upgrade pipx
           pipx install poetry
           poetry install
-      - name: Set up MongoDB
-        uses: supercharge/mongodb-github-action@1.8.0
+      - name: Install and run MongoDB
+        uses: supercharge/mongodb-github-action@1.6.0
         with:
-          mongodb-version: '7.0'
-          mongodb-root-username: tester
-          mongodb-root-password: tester$
-          mongodb-port: 42069
-      - name: Wait for MongoDB
-        run: |
-          until mongo --eval "print('MongoDB is ready')" &>/dev/null; do
-            echo "Waiting for MongoDB...";
-            sleep 5;
-          done
+          mongodb-version: ${{ matrix.mongodb-version }}
       - name: Run Tests
         run: poetry run pytest --cov=src tests/
+      - name: Read coverage
+        run: |
+          poetry run coverage html
