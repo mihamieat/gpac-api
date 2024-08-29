@@ -42,10 +42,10 @@ curl -sSL https://bootstrap.pypa.io/get-pip.py | python -
 python -m pip install --user pre-commit
 pre-commit install
 ```
-#### Unit test
-Unit test is an essential tol for the pre-commit action. It could also be launched alone.
+#### Unit Test
+Unit test is an essential tool for the pre-commit action. It could also be launched alone.
 
-Again, make sure to have Docker installed as well as [Docker compose](https://docs.docker.com/compose/install/)
+Again, make sure to have Docker installed as well as [Docker Compose](https://docs.docker.com/compose/install/)
 
 Make sure that the shell script is executable for the current user
 ```sh
