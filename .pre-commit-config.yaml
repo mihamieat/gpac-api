@@ -31,7 +31,7 @@ repos:
           args: [--max-line-length=110]
 
   - repo: https://github.com/psf/black
-    rev: 23.3.0
+    rev: 24.8.0
     hooks:
       - id: black
         language_version: python3.11.6
@@ -44,10 +44,8 @@ repos:
           language: system
           types: [python]
           require_serial: true
-      # -   id: pytest
-      #     name: pytest
-      #     entry: poetry run pytest
-      #     language: system
-      #     pass_filenames: false
-      #     always_run: true
-      #     types: [python]
+      -   id: pytest-mongodb
+          name: Run pytest with MongoDB in a docker container
+          entry: ./unittest.sh
+          language: script
+          types: [python]

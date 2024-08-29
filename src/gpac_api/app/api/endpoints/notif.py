@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
 """notif api endpoint modules."""
+from typing import Annotated
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import HTTPBasicCredentials
 
 from src.gpac_api.app.crud.notif import create_notif, find_notif
 from src.gpac_api.app.schemas.notif import NotifCreateSchema, NotifResponseSchema
+from src.gpac_api.app.utils.logger import logger
+from src.gpac_api.app.utils.security import verify_credentials, security
 
 
 router = APIRouter()
 
 
 @router.post("/", response_model=NotifResponseSchema)
-async def new_notif(notif: NotifCreateSchema):
+def new_notif(
+    notif: NotifCreateSchema,
+    credentials: Annotated[HTTPBasicCredentials, Depends(security)],
+):
     """
     Creates a new notification based on the provided notification data.
 
@@ -24,11 +31,14 @@ async def new_notif(notif: NotifCreateSchema):
     Raises:
         None
     """
-    return await create_notif(notif)
+    verify_credentials(credentials)
+    return create_notif(notif)
 
 
 @router.get("/{notif_id}", response_model=NotifResponseSchema)
-async def get_notif(notif_id: str):
+def get_notif(
+    notif_id: str, credentials: Annotated[HTTPBasicCredentials, Depends(security)]
+):
     """
     Retrieves a notification by its identifier.
 
@@ -41,8 +51,9 @@ async def get_notif(notif_id: str):
     Raises:
         HTTPException: Raised if the provided notification ID format is invalid.
     """
-
-    try:
-        return await find_notif(notif_id)
-    except Exception as e:
-        raise HTTPException(status_code=400, detail="Invalid ID format") from e
+    verify_credentials(credentials)
+    logger.debug("notif_id: %s", notif_id)
+    notif = find_notif(notif_id)
+    if notif is None:
+        raise HTTPException(status_code=404, detail="Notif not found")
+    return notif
