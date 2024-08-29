@@ -22,6 +22,6 @@ if not is_testing_env():
     client = MongoClient(DATABASE_URL)
     db = client[DATABASE_CLIENT]
 else:
-    client = MongoClient("mongodb://tester:tester$@localhost:27017")
+    client = MongoClient("mongodb://localhost:27017")
     db = client["testdb"]
     logger.warning("test environment in use")
