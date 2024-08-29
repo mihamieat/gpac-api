@@ -20,6 +20,8 @@ fastapi run src/gpac_api/app/main.py --port 80
 fastapi dev src/gpac_api/app/main.py --reload
 ```
 ## Docker
+Make sure to have Docker installed.
+
 To run the server in a docker container.
 
 Create a Docker image.
@@ -39,4 +41,17 @@ python -m ensurepip
 curl -sSL https://bootstrap.pypa.io/get-pip.py | python -
 python -m pip install --user pre-commit
 pre-commit install
+```
+#### Unit test
+Unit test is an essential tol for the pre-commit action. It could also be launched alone.
+
+Again, make sure to have Docker installed as well as [Docker compose](https://docs.docker.com/compose/install/)
+
+Make sure that the shell script is executable for the current user
+```sh
+chmod u+x ./unittest.sh
+```
+You can now run
+```sh
+./unittest.sh
 ```
