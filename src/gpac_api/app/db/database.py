@@ -32,7 +32,7 @@ if not is_testing_env():
 
     DATABASE_URL = (
         f"mongodb+srv://{DATABASE_USER}:{DATABASE_PASSWORD}"
-        f"@{DATABASE_DOMAIN}/?retryWrites=true&w=majority&appName={DATABASE_APP_NAME}"
+        f"@{DATABASE_DOMAIN}/?retryWrites=true&w=majority&appName={DATABASE_APP_NAME}&tls=true"
     )
 
     client = MongoClient(DATABASE_URL)
