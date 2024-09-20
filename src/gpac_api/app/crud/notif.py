@@ -1,13 +1,14 @@
 # -*- coding: utf-8 -*-
 """handle CRUD operations for notif model. """
 
-from fastapi import HTTPException
-
 from src.gpac_api.app.models.notif import NotifModel
 from src.gpac_api.app.schemas.notif import NotifResponseSchema
 from src.gpac_api.app.db.database import db
 from src.gpac_api.app.utils.logger import logger
-from src.gpac_api.app.utils.converters import convert_object_ids, str_to_object_id
+from src.gpac_api.app.utils.converters import (
+    convert_object_ids,
+    validate_object_ids,
+)
 
 
 def create_notif(notif: NotifModel) -> NotifResponseSchema:
@@ -46,12 +47,24 @@ def find_notif(notif_id: str) -> NotifResponseSchema:
         None
     """
     collection = db.notif
-    try:
-        object_id = str_to_object_id(notif_id)
-    except Exception as e:
-        raise HTTPException(
-            status_code=400, detail="Invalid notification ID format"
-        ) from e
+    object_id = validate_object_ids(notif_id)
     found_notif = collection.find_one({"_id": object_id})
     logger.debug("Found notification %s", found_notif)
     return found_notif
+
+
+def del_notif(notif_id: str):
+    """Delete a notification from the database.
+
+    Args:
+        notif_id (str): The unique identifier of the notification to be deleted.
+
+    Returns:
+        None
+
+    Raises:
+        ValueError: If the provided notif_id is invalid.
+    """
+    collection = db.notif
+    object_id = validate_object_ids(notif_id)
+    collection.delete_one({"_id": object_id})

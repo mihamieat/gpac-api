@@ -5,7 +5,7 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPBasicCredentials
 
-from src.gpac_api.app.crud.notif import create_notif, find_notif
+from src.gpac_api.app.crud.notif import create_notif, find_notif, del_notif
 from src.gpac_api.app.schemas.notif import NotifCreateSchema, NotifResponseSchema
 from src.gpac_api.app.utils.logger import logger
 from src.gpac_api.app.utils.security import verify_credentials, security
@@ -57,3 +57,23 @@ def get_notif(
     if notif is None:
         raise HTTPException(status_code=404, detail="Notif not found")
     return notif
+
+
+@router.delete("/{notif_id}")
+def delete_notif(
+    notif_id: str, credentials: Annotated[HTTPBasicCredentials, Depends(security)]
+):
+    """Delete a notification identified by its ID.
+
+    Args:
+        notif_id (str): The unique identifier of the notification to be deleted.
+        credentials (HTTPBasicCredentials): The credentials for authentication.
+
+    Returns:
+        None
+
+    Raises:
+        HTTPException: If the deletion fails due to an invalid operation or credentials.
+    """
+    verify_credentials(credentials)
+    del_notif(notif_id)

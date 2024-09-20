@@ -82,3 +82,15 @@ def test_create_notif(client, notif_db, headers):
     assert create_notif["gpus"] == data["gpus"]
     assert create_notif["mail_content"] == data["mail_content"]
     assert create_notif["message_type"] == data["message_type"]
+
+
+def test_delete_notif(client, notif_db, headers):
+    """Test delete notif."""
+    _, notif_id = notif_db
+    response = client.delete(f"{ENDPOINT}/{notif_id}", headers=headers)
+    not_found = client.get(
+        f"{ENDPOINT}/{notif_id}",
+        headers=headers,
+    )
+    assert response.status_code == 200
+    assert not_found.status_code == 404

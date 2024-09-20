@@ -2,6 +2,7 @@
 """converter modules."""
 
 from bson import ObjectId
+from fastapi import HTTPException
 
 
 def convert_object_ids(data):
@@ -42,3 +43,23 @@ def str_to_object_id(string: str) -> ObjectId:
         None
     """
     return ObjectId(string)
+
+
+def validate_object_ids(id_string: str):
+    """Validate and convert a string to an object ID.
+
+    Args:
+        id_string (str): The string representation of the ID to be validated.
+
+    Returns:
+        str: The converted object ID as a string.
+
+    Raises:
+        HTTPException: If the provided id_string is not in a valid format.
+    """
+    try:
+        return str_to_object_id(id_string)
+    except Exception as e:
+        raise HTTPException(
+            status_code=400, detail="Invalid notification ID format"
+        ) from e
