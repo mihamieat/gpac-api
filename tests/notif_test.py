@@ -65,6 +65,13 @@ def test_notif_wrong_id_format(client, headers):
         assert response_data["detail"] == "Invalid notification ID format"
 
 
+def test_get_all_notif(client, headers):
+    """Test get all notifications."""
+    response = client.get(f"{ENDPOINT}", headers=headers)
+    assert response.status_code == 200
+    assert len(response.json()) == 1
+
+
 def test_create_notif(client, notif_db, headers):
     """Test create notif."""
     data = {

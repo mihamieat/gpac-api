@@ -2,7 +2,7 @@
 """handle CRUD operations for notif model. """
 
 from src.gpac_api.app.models.notif import NotifModel
-from src.gpac_api.app.schemas.notif import NotifResponseSchema
+from src.gpac_api.app.schemas.notif import NotifResponseSchema, NotifResponseListSchema
 from src.gpac_api.app.db.database import db
 from src.gpac_api.app.utils.logger import logger
 from src.gpac_api.app.utils.converters import (
@@ -51,6 +51,18 @@ def find_notif(notif_id: str) -> NotifResponseSchema:
     found_notif = collection.find_one({"_id": object_id})
     logger.debug("Found notification %s", found_notif)
     return found_notif
+
+
+def find_all_notifs() -> NotifResponseListSchema:
+    """Retrieve all notifications from the database.
+
+    Returns:
+        Cursor: A cursor to the collection of notifications retrieved from the database.
+    """
+    collection = db.notif
+    results = list(collection.find({}))
+    notifications = [NotifResponseSchema(**notif) for notif in results]
+    return NotifResponseListSchema(notifications=notifications)
 
 
 def del_notif(notif_id: str):

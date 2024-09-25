@@ -5,8 +5,17 @@ from typing import Annotated
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi.security import HTTPBasicCredentials
 
-from src.gpac_api.app.crud.notif import create_notif, find_notif, del_notif
-from src.gpac_api.app.schemas.notif import NotifCreateSchema, NotifResponseSchema
+from src.gpac_api.app.crud.notif import (
+    create_notif,
+    find_notif,
+    find_all_notifs,
+    del_notif,
+)
+from src.gpac_api.app.schemas.notif import (
+    NotifCreateSchema,
+    NotifResponseSchema,
+    NotifResponseListSchema,
+)
 from src.gpac_api.app.utils.logger import logger
 from src.gpac_api.app.utils.security import verify_credentials, security
 
@@ -57,6 +66,23 @@ def get_notif(
     if notif is None:
         raise HTTPException(status_code=404, detail="Notif not found")
     return notif
+
+
+@router.get("/", response_model=NotifResponseListSchema)
+def get_notifs(credentials: Annotated[HTTPBasicCredentials, Depends(security)]):
+    """Retrieve notifications after verifying user credentials.
+
+    Args:
+        credentials (HTTPBasicCredentials): The user's credentials for authentication.
+
+    Returns:
+        NotifResponseListSchema: A list of notifications retrieved from the database.
+
+    Raises:
+        HTTPException: If the credentials are invalid or verification fails.
+    """
+    verify_credentials(credentials)
+    return find_all_notifs()
 
 
 @router.delete("/{notif_id}")
