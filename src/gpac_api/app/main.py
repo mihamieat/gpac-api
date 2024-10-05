@@ -3,12 +3,13 @@
 
 from fastapi import FastAPI
 from src.gpac_api.app.utils.lifespan import lifespan
-from src.gpac_api.app.api.endpoints import notif
+from src.gpac_api.app.api.endpoints import notif, gpu_data
 
 
 app = FastAPI(lifespan=lifespan)
 
 app.include_router(notif.router, prefix="/notif", tags=["notif"])
+app.include_router(gpu_data.router, prefix="/gpu_data", tags=["gpu_data"])
 
 
 @app.get("/")
