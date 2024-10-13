@@ -4,7 +4,7 @@
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 
 class DateRangeModel(BaseModel):
@@ -16,5 +16,5 @@ class DateRangeModel(BaseModel):
         end_date (datetime): 2023-10-01T01:00:00.
     """
 
-    start_date: Optional[datetime]
-    end_date: Optional[datetime]
+    start_date: Optional[datetime] = Field(default=None)
+    end_date: Optional[datetime] = Field(default=None)

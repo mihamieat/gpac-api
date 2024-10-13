@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 """handle CRUD operations for gpu_data model. """
 
-from dateutil import parser
-
 from src.gpac_api.app.models.gpu_data import GpuDataModel
+from src.gpac_api.app.models.date_models import DateRangeModel
 from src.gpac_api.app.schemas.gpu_data import (
     GPUDataResponseSchema,
     GPUDataResponseListSchema,
@@ -28,7 +27,9 @@ def create_gpu_data(gpu_data: GpuDataModel) -> GPUDataResponseSchema:
     return convert_object_ids(created_gpu_data)
 
 
-def get_gpu_data_by_time_interval(start_date, end_date):
+def get_gpu_data_by_time_interval(
+    date_range: DateRangeModel = DateRangeModel(),
+) -> GPUDataResponseListSchema:
     """
     Retrieves GPU data within a specified time interval.
 
@@ -43,19 +44,19 @@ def get_gpu_data_by_time_interval(start_date, end_date):
         ValueError: If the provided date strings cannot be parsed into valid datetime objects.
     """
     collection = db.gpu_data
-    query = {}
+    query = {
+        "timestamp": {
+            k: v
+            for k, v in {
+                "$gte": date_range.start_date,
+                "$lte": date_range.end_date,
+            }.items()
+            if v is not None
+        }
+    }
 
-    if isinstance(start_date, str):
-        start_date = parser.isoparse(start_date)
-    if isinstance(end_date, str):
-        end_date = parser.isoparse(end_date)
-
-    if start_date and end_date:
-        query["timestamp"] = {"$gte": start_date, "$lte": end_date}
-    elif start_date:
-        query["timestamp"] = {"$gte": start_date}
-    elif end_date:
-        query["timestamp"] = {"$lte": end_date}
+    if not query["timestamp"]:
+        del query["timestamp"]
 
     result = list(collection.find(query))
     gpu_data = [GPUDataResponseSchema(**gpu_data) for gpu_data in result]
