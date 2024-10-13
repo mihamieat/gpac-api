@@ -67,7 +67,8 @@ def get_gpu_data(
     """
     verify_credentials(credentials)
     try:
-        DateRangeModel(start_date=start_date, end_date=end_date)
+        return get_gpu_data_by_time_interval(
+            DateRangeModel(start_date=start_date, end_date=end_date)
+        )
     except ValueError as e:
         raise HTTPException(status_code=400, detail="Invalid datetime format") from e
-    return get_gpu_data_by_time_interval(start_date, end_date)
