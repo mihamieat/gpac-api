@@ -42,3 +42,5 @@ else:
     client = MongoClient("mongodb://localhost:27017")
     db = client["testdb"]
     logger.warning("test environment in use")
+    for collection_name in db.list_collection_names():
+        db[collection_name].drop()
