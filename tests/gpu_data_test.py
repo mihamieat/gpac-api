@@ -14,7 +14,7 @@ def test_get_gpu_data(client, gpu_data_db, headers):
 
     assert response.status_code == 200
     assert len(response_data["gpu_data"]) == 2
-    assert "server_name" in response_data["gpu_data"][0]
+    assert "hostname" in response_data["gpu_data"][0]
     assert "gpus" in response_data["gpu_data"][0]
     assert "timestamp" in response_data["gpu_data"][0]
 
@@ -66,7 +66,7 @@ def test_get_gpu_data_with_wron_date_format(client, gpu_data_db, headers):
 def test_create_gpu_data(client, headers):
     """Test create_gpu_data."""
     gpu_data = {
-        "server_name": "server1",
+        "hostname": "server1",
         "gpus": [
             {
                 "gpu_name": "string",
@@ -74,8 +74,8 @@ def test_create_gpu_data(client, headers):
                 "fan_speed": 51,
                 "temperature": 32,
                 "performance": "string",
-                "power_usage_min": 22,
-                "power_usage_max": 77,
+                "power_used": 22,
+                "power_total": 77,
                 "memory_used": 324,
                 "memory_total": 235,
                 "gpu_utilization": 70,
@@ -86,8 +86,8 @@ def test_create_gpu_data(client, headers):
                 "fan_speed": 20,
                 "temperature": 20,
                 "performance": "string",
-                "power_usage_min": 10,
-                "power_usage_max": 20,
+                "power_used": 10,
+                "power_total": 20,
                 "memory_used": 40,
                 "memory_total": 50,
                 "gpu_utilization": 60,
