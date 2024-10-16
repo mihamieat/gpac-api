@@ -78,7 +78,7 @@ def gpu_data_db():
     gpu_data_collection = db["gpu_data"]
     gpu_data = [
         {
-            "server_name": "server1",
+            "hostname": "server1",
             "gpus": [
                 {
                     "gpu_name": "string",
@@ -86,8 +86,8 @@ def gpu_data_db():
                     "fan_speed": 50,
                     "temperature": 34,
                     "performance": "string",
-                    "power_usage_min": 23,
-                    "power_usage_max": 78,
+                    "power_used": 23,
+                    "power_total": 78,
                     "memory_used": 3245,
                     "memory_total": 2345,
                     "gpu_utilization": 50,
@@ -98,8 +98,8 @@ def gpu_data_db():
                     "fan_speed": 10,
                     "temperature": 10,
                     "performance": "string",
-                    "power_usage_min": 10,
-                    "power_usage_max": 10,
+                    "power_used": 10,
+                    "power_total": 10,
                     "memory_used": 10,
                     "memory_total": 10,
                     "gpu_utilization": 10,
@@ -108,7 +108,7 @@ def gpu_data_db():
             "timestamp": datetime.now().isoformat(),
         },
         {
-            "server_name": "server2",
+            "hostname": "server2",
             "gpus": [
                 {
                     "gpu_name": "string",
@@ -116,8 +116,8 @@ def gpu_data_db():
                     "fan_speed": 40,
                     "temperature": 40,
                     "performance": "string",
-                    "power_usage_min": 40,
-                    "power_usage_max": 40,
+                    "power_used": 40,
+                    "power_total": 40,
                     "memory_used": 40,
                     "memory_total": 40,
                     "gpu_utilization": 60,

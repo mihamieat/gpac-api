@@ -14,12 +14,12 @@ class GPUDataCreateSchema(BaseModel):
     Represents the schema for creating GPU data entries.
 
     Args:
-        server_name (str)
+        hostname (str)
         gpus (List[GpuInfo])
         timestamp (datetime)
     """
 
-    server_name: str
+    hostname: str
     gpus: List[GpuInfoModel]
     timestamp: datetime
 
@@ -30,13 +30,13 @@ class GPUDataResponseSchema(BaseModel):
 
     Args:
         _id (str)
-        server_name (str)
+        hostname (str)
         gpus (List[GpuInfo])
         timestamp (datetime)
     """
 
     _id: str
-    server_name: str
+    hostname: str
     gpus: List[GpuInfoModel]
     timestamp: datetime
 

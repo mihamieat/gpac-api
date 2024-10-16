@@ -22,8 +22,8 @@ class GpuInfoModel(BaseModel):
     fan_speed: int
     temperature: int
     performance: str
-    power_usage_min: int
-    power_usage_max: int
+    power_used: int
+    power_total: int
     memory_used: int
     memory_total: int
     gpu_utilization: int
@@ -34,11 +34,11 @@ class GpuDataModel(BaseModel):
     Represents the model for GPU data.
 
     Args:
-        server_name (str)
+        hostname (str)
         gpus (List[GpuInfo])
         timestamp (datetime)
     """
 
-    server_name: str
+    hostname: str
     gpus: List[GpuInfoModel]
     timestamp: datetime
