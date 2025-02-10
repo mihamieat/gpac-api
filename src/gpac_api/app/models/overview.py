@@ -18,5 +18,5 @@ class OverviewModel(BaseModel):
 
     _id: str
     hostname: str
-    gpu_data: List[int]
-    percentage: float
+    gpu_data: List[dict]
+    percentage: dict
