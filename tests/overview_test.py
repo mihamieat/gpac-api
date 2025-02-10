@@ -99,3 +99,33 @@ def test_create_overview_percentage_edge_cases(client, headers):
     }
     response = client.post(ENDPOINT, headers=headers, json=overview_data)
     assert response.status_code == 422
+
+
+def test_get_latest_overview_data(client, headers, overview_data_db):
+    """Test get latest overview data for a given server name."""
+    _ = overview_data_db
+    response = client.get(f"{ENDPOINT}/?hostname=server1", headers=headers)
+    response_data = response.json()
+    assert response.status_code == 200
+    assert "hostname" in response_data
+    assert "gpu_data" in response_data
+    assert "percentage" in response_data
+    assert "active_users" in response_data
+
+
+def test_get_latest_overview_data_missing_hostname(client, headers, overview_data_db):
+    """Test get latest overview data without providing a hostname."""
+    _ = overview_data_db
+    response = client.get(f"{ENDPOINT}/", headers=headers)
+    assert response.status_code == 422
+    response_data = response.json()
+    assert response_data == {
+        "detail": [
+            {
+                "input": None,
+                "loc": ["query", "hostname"],
+                "msg": "Field required",
+                "type": "missing",
+            }
+        ]
+    }
