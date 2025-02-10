@@ -25,3 +25,4 @@ class OverviewCreateSchema(BaseModel):
     hostname: str
     gpu_data: List[PercentageDataSchema]
     percentage: PercentageDataSchema
+    active_users: int

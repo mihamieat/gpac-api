@@ -20,3 +20,4 @@ class OverviewModel(BaseModel):
     hostname: str
     gpu_data: List[dict]
     percentage: dict
+    active_users: int
