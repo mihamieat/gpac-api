@@ -13,6 +13,7 @@ def test_create_overview_normal_case(client, headers):
             {"percentage": 80, "timestamp": "2022-01-01T13:00:00"},
         ],
         "percentage": {"percentage": 80, "timestamp": "2022-01-01T13:00:00"},
+        "active_users": 1,
     }
     response = client.post(ENDPOINT, headers=headers, json=overview_data)
     assert response.status_code == 200
@@ -24,6 +25,7 @@ def test_create_overview_unauthorized(client):
         "hostname": "server1",
         "gpu_data": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
         "percentage": 10,
+        "active_users": 1,
     }
     response = client.post(ENDPOINT, json=overview_data)
     assert response.status_code == 401
@@ -36,6 +38,7 @@ def test_create_overview_gpu_data_edge_cases(client, headers):
         "hostname": "server1",
         "gpu_data": [],
         "percentage": {"percentage": 50, "timestamp": "2022-01-01T13:00:00"},
+        "active_users": 1,
     }
     response = client.post(ENDPOINT, headers=headers, json=overview_data)
     assert response.status_code == 200
@@ -65,6 +68,7 @@ def test_create_overview_percentage_edge_cases(client, headers):
             {"percentage": 20, "timestamp": "2022-01-01T12:00:00"},
             {"percentage": 40, "timestamp": "2022-01-01T13:00:00"},
         ],
+        "active_users": 1,
     }
 
     # Test negative percentage (should fail)
