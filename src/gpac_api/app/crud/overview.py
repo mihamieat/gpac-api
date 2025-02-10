@@ -17,6 +17,7 @@ def create_overview(overview_data: OverviewCreateSchema) -> OverviewModel:
         OverviewModel
     """
     collection = db.overview_data
+    document = overview_data.model_dump()
     new_overview_data = collection.insert_one(overview_data.model_dump())
-    created_overview_data = collection.find_one({"_id": new_overview_data.inserted_id})
-    return convert_object_ids(created_overview_data)
+    document["_id"] = new_overview_data.inserted_id
+    return convert_object_ids(document)
