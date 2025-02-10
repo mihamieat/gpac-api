@@ -26,3 +26,15 @@ class OverviewCreateSchema(BaseModel):
     gpu_data: List[PercentageDataSchema]
     percentage: PercentageDataSchema
     active_users: int
+
+
+class OverviewResponseSchema(BaseModel):
+    """Schema for overview data responses.
+    Represents the structure for overview data responses.
+    """
+
+    _id: str
+    hostname: str
+    gpu_data: List[PercentageDataSchema]
+    percentage: PercentageDataSchema
+    active_users: int

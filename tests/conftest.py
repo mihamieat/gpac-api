@@ -131,6 +131,60 @@ def gpu_data_db():
 
 
 @pytest.fixture
+def overview_data_db():
+    """
+    Setup overview data collection.
+    """
+    overview_collection = db["overview_data"]
+    overview_data = [
+        {
+            "hostname": "server1",
+            "gpu_data": [
+                {
+                    "percentage": 90,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 80,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 70,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 60,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 50,
+                    "timestamp": datetime.now().isoformat(),
+                },
+            ],
+            "percentage": {"percentage": 80, "timestamp": datetime.now().isoformat()},
+            "active_users": 1,
+        },
+        {
+            "hostname": "server2",
+            "gpu_data": [
+                {
+                    "percentage": 90,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 80,
+                    "timestamp": datetime.now().isoformat(),
+                },
+            ],
+            "percentage": {"percentage": 80, "timestamp": datetime.now().isoformat()},
+            "active_users": 1,
+        },
+    ]
+    overview_collection.insert_many(overview_data)
+    return overview_collection
+
+
+@pytest.fixture
 def headers():
     """
     Fixture that provides authorization headers for testing.
