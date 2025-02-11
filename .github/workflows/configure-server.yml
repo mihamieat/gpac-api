@@ -1,0 +1,42 @@
+name: Configure GPac API Remote Server
+
+on:
+  push:
+    branches:
+      - master
+      - develop
+    tags:
+      - v*
+
+jobs:
+  configure_server:
+    name: Configure Remote Server
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Ansible
+        run: sudo apt update && sudo apt install -y ansible
+
+      - name: Set Up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Set Up SSH Public Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
+          chmod 644 ~/.ssh/id_rsa.pub
+
+      - name: Run Ansible Playbook
+        uses: dawidd6/action-ansible-playbook@v3
+        with:
+          playbook: playbooks/configure-server-dev-playbook.yml
+          inventory: |
+            [web]
+            ${{ secrets.REMOTE_HOST }} ansible_user=${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
