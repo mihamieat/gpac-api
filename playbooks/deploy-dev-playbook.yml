@@ -1,0 +1,26 @@
+- name: Deploy Gpac-API Docker App
+  hosts: web
+  become:  yes
+  tasks:
+  - name: Build Docker Image
+    ansible.builtin.command: |
+      docker pull mihamieat/gpac-api:develop
+
+  - name: Stop and remove existing container
+    ansible.builtin.command: |
+      docker rm -f gpac-api
+    ignore_errors: true
+
+  - name: Run Docker container
+    ansible.builtin.docker_container:
+      name: gpac-api
+      image: mihamieat/gpac-api:develop
+      ports:
+        - 80:80
+      env:
+        DATABASE_USER: "{{ database_user }}"
+        DATABASE_PASSWORD: "{{ database_password }}"
+        DATABASE_DOMAIN: "{{ database_domain }}"
+        DATABASE_APP_NAME: "{{ database_app_name }}"
+        DATABASE_CLIENT: "{{ database_client }}"
+      restart_policy: always
