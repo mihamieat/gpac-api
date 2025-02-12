@@ -36,7 +36,9 @@ def get_latest_overview(hostname: str) -> Optional[OverviewResponseSchema]:
     """
     collection = db.overview_data
     latest_overview_data = (
-        collection.find({"hostname": hostname}).sort("timestamp", -1).limit(1)
+        collection.find({"hostname": hostname})
+        .sort("percentage.timestamp", -1)
+        .limit(1)
     )
 
     if latest_overview_list := list(latest_overview_data):
