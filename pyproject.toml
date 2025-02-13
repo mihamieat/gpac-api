@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gpac-api"
-version = "0.1.0"
+version = "0.1.0-dev"
 description = ""
 authors = ["Mihamina Rakotovazaha <r.miham@yahoo.com>", "Stephane Vusasinovic stephane.vujasinovic@gmail.com"]
 readme = "README.md"
@@ -21,6 +21,7 @@ python-dotenv = "^1.0.1"
 pylint = "^3.2.6"
 python-dateutil = "^2.9.0.post0"
 git-cliff = "^2.8.0"
+bump2version = "^1.0.1"
 
 
 [tool.poetry.group.dev.dependencies]

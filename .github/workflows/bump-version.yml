@@ -1,12 +1,10 @@
-name: Update changelog
+name: Update changelog and bump version
 'on':
   push:
     branches:
       - master
-    tags:
-      - v*
 jobs:
-  update_changelog:
+  bump_version:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -25,23 +23,20 @@ jobs:
           pipx install poetry
           poetry install
 
-      - name: Generate changelog
+      - name: Commit and Push Changelog and Bump Version
         run: |
-          poetry run git cliff -o CHANGELOG.md
-
-      - name: Commit and Push Changelog
-        run: >
           set -e  # Exit immediately if a command exits with a non-zero status
 
-
           git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
-          git config --global user.email
-          "github-actions[bot]@users.noreply.github.com"
+          poetry run git cliff -o CHANGELOG.md
 
-
+          git add -u
           git add CHANGELOG.md
 
-          git commit -m "chore: update changelog" || echo "No changes to commit"
+          git commit -m "chore: update changelog"
 
-          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/mihamieat/gpac-api.git master
+          poetry run bump2version minor
+
+          git push https://x-access-token:${{ secrets.GH_PAT }}@github.com/mihamieat/gpac-api.git master --follow-tags
