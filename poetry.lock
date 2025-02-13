@@ -94,6 +94,17 @@ jupyter = ["ipython (>=7.8.0)", "tokenize-rt (>=3.2.0)"]
 uvloop = ["uvloop (>=0.15.2)"]
 
 [[package]]
+name = "bump2version"
+version = "1.0.1"
+description = "Version-bump your software with a single command!"
+optional = false
+python-versions = ">=3.5"
+files = [
+    {file = "bump2version-1.0.1-py2.py3-none-any.whl", hash = "sha256:37f927ea17cde7ae2d7baf832f8e80ce3777624554a653006c9144f8017fe410"},
+    {file = "bump2version-1.0.1.tar.gz", hash = "sha256:762cb2bfad61f4ec8e2bdf452c7c267416f8c70dd9ecb1653fd0bbb01fa936e6"},
+]
+
+[[package]]
 name = "certifi"
 version = "2024.7.4"
 description = "Python package for providing Mozilla's CA Bundle."
@@ -361,6 +372,25 @@ files = [
 docs = ["furo (>=2023.9.10)", "sphinx (>=7.2.6)", "sphinx-autodoc-typehints (>=1.25.2)"]
 testing = ["covdefaults (>=2.3)", "coverage (>=7.3.2)", "diff-cover (>=8.0.1)", "pytest (>=7.4.3)", "pytest-asyncio (>=0.21)", "pytest-cov (>=4.1)", "pytest-mock (>=3.12)", "pytest-timeout (>=2.2)", "virtualenv (>=20.26.2)"]
 typing = ["typing-extensions (>=4.8)"]
+
+[[package]]
+name = "git-cliff"
+version = "2.8.0"
+description = "A highly customizable changelog generator ⛰️"
+optional = false
+python-versions = ">=3.7"
+files = [
+    {file = "git_cliff-2.8.0-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:bfd552f1bda845e85e0a570336b4dacaf76e481f9ebe00301fe5c869377e2289"},
+    {file = "git_cliff-2.8.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:281504bb22da43b671f9131c3cd7f0d56fa4aa7c9a1922948f9a537a76b38ea7"},
+    {file = "git_cliff-2.8.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:485b825fec2600bd2ab847cd5f1724c874ddc0aed7e57d7fb43e484fcc114f8a"},
+    {file = "git_cliff-2.8.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:6dad66722d0df40bd3722cf274cae5f6f55d61f5faa5974c48a68c62179592f7"},
+    {file = "git_cliff-2.8.0-py3-none-manylinux_2_28_aarch64.whl", hash = "sha256:96cc47b9716fdeddfa0d68f6c93d6f7deb056da3dcefc0b4e337edb463b5790d"},
+    {file = "git_cliff-2.8.0-py3-none-manylinux_2_5_i686.manylinux1_i686.whl", hash = "sha256:aef4513c51ccd05f21cb539d4125902dbe555abd56695c9793f01636775075ee"},
+    {file = "git_cliff-2.8.0-py3-none-manylinux_2_5_x86_64.manylinux1_x86_64.whl", hash = "sha256:db21d6f3bf2641bd45340d076e108692606b723ddf8fc7be6bef3ffc9faedaff"},
+    {file = "git_cliff-2.8.0-py3-none-win32.whl", hash = "sha256:09611b9e909f2635378bf185616a82ec7e9bbccb6e79ae6ce204c2ea4005f215"},
+    {file = "git_cliff-2.8.0-py3-none-win_amd64.whl", hash = "sha256:e284e6b1e7f701b9f2836f31fec38c408da54f361f1a281d0e4709f33f00d905"},
+    {file = "git_cliff-2.8.0.tar.gz", hash = "sha256:ab252f0d31c6febb57b6d4f24f9584b779327af43bc94e2bdb00867248cb5d0d"},
+]
 
 [[package]]
 name = "h11"
@@ -1054,6 +1084,20 @@ pytest = ">=4.6"
 testing = ["fields", "hunter", "process-tests", "pytest-xdist", "virtualenv"]
 
 [[package]]
+name = "python-dateutil"
+version = "2.9.0.post0"
+description = "Extensions to the standard Python datetime module"
+optional = false
+python-versions = "!=3.0.*,!=3.1.*,!=3.2.*,>=2.7"
+files = [
+    {file = "python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3"},
+    {file = "python_dateutil-2.9.0.post0-py2.py3-none-any.whl", hash = "sha256:a8b2bc7bffae282281c8140a97d3aa9c14da0b136dfe83f850eea9a5f7470427"},
+]
+
+[package.dependencies]
+six = ">=1.5"
+
+[[package]]
 name = "python-dotenv"
 version = "1.0.1"
 description = "Read key-value pairs from a .env file and set them as environment variables"
@@ -1186,6 +1230,17 @@ python-versions = ">=3.7"
 files = [
     {file = "shellingham-1.5.4-py2.py3-none-any.whl", hash = "sha256:7ecfff8f2fd72616f7481040475a65b2bf8af90a56c89140852d1120324e8686"},
     {file = "shellingham-1.5.4.tar.gz", hash = "sha256:8dbca0739d487e5bd35ab3ca4b36e11c4078f3a234bfce294b0a0291363404de"},
+]
+
+[[package]]
+name = "six"
+version = "1.16.0"
+description = "Python 2 and 3 compatibility utilities"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+files = [
+    {file = "six-1.16.0-py2.py3-none-any.whl", hash = "sha256:8abb2f1d86890a2dfb989f9a77cfcfd3e47c2a354b01111771326f8aa26e0254"},
+    {file = "six-1.16.0.tar.gz", hash = "sha256:1e61c37477a1626458e36f7b1d82aa5c9b094fa4802892072e49de9c60c4c926"},
 ]
 
 [[package]]
@@ -1539,4 +1594,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "1ac207adba7a67f663c7620da6c4962528ae73405b668b7e5044b061b178c6c4"
+content-hash = "2ddc4d88837aa8b3fc06bdfa83138ea2677537a8f02f380b02cf0bdb8acfe585"

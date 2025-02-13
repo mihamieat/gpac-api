@@ -1,5 +1,6 @@
 [![codecov](https://codecov.io/gh/mihamieat/gpac-api/graph/badge.svg?token=5UM8L15FL1)](https://codecov.io/gh/mihamieat/gpac-api)
 ![CI](https://github.com/mihamieat/gpac-api/actions/workflows/ci.yml/badge.svg)
+[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/mihamieat/gpac)
 # Gpac API documentation
 ## Overview
 > GpacAPI is a service for interacting with the GPAC application.

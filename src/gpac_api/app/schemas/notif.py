@@ -43,7 +43,7 @@ fields by their names.
 as converting ObjectId to string.
     """
 
-    _id: ObjectId
+    _id: str
     recipients: List[str]
     gpus: List[str]
     mail_content: str
@@ -61,3 +61,14 @@ as converting ObjectId to string.
 
         allow_population_by_field_name = True
         json_encoders = {ObjectId: str}
+
+
+class NotifResponseListSchema(BaseModel):
+    """
+    NotifResponseListSchema is a schema that represents a list of notification responses.
+
+    Attributes:
+        notifications (List[NotifResponseSchema]): A list of notification response schemas.
+    """
+
+    notifications: List[NotifResponseSchema]

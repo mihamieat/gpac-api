@@ -6,6 +6,7 @@ name: GPacAPI FastAPI CI
       - develop
       - feature/*
       - fix/*
+      - bugfix/*
       - hotfix/*
       - refactor/*
       - test/*
@@ -69,9 +70,9 @@ jobs:
       - name: Run Tests
         run: poetry run pytest --cov=src tests/ --junitxml=junit.xml -o junit_family=legacy
       - name: Upload coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
+          name: coverage-report-${{ matrix.mongodb-version }}
           path: junit.xml
       - name: Upload test results to Codecov
         if: ${{ !cancelled() }}

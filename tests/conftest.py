@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """Test the main module."""
 
+from datetime import datetime
+
 from base64 import b64encode
 import pytest
 from fastapi.testclient import TestClient
@@ -68,6 +70,118 @@ def notif_db():
     inserted_id = result.inserted_id
 
     return notif_collection_db, inserted_id
+
+
+@pytest.fixture
+def gpu_data_db():
+    """Setup gpu_data colleciton."""
+    gpu_data_collection = db["gpu_data"]
+    gpu_data = [
+        {
+            "hostname": "server1",
+            "gpus": [
+                {
+                    "gpu_name": "string",
+                    "gpu_id": "string",
+                    "fan_speed": 50,
+                    "temperature": 34,
+                    "performance": "string",
+                    "power_used": 23,
+                    "power_total": 78,
+                    "memory_used": 3245,
+                    "memory_total": 2345,
+                    "gpu_utilization": 50,
+                },
+                {
+                    "gpu_name": "string",
+                    "gpu_id": "string",
+                    "fan_speed": 10,
+                    "temperature": 10,
+                    "performance": "string",
+                    "power_used": 10,
+                    "power_total": 10,
+                    "memory_used": 10,
+                    "memory_total": 10,
+                    "gpu_utilization": 10,
+                },
+            ],
+            "timestamp": datetime.now().isoformat(),
+        },
+        {
+            "hostname": "server2",
+            "gpus": [
+                {
+                    "gpu_name": "string",
+                    "gpu_id": "string",
+                    "fan_speed": 40,
+                    "temperature": 40,
+                    "performance": "string",
+                    "power_used": 40,
+                    "power_total": 40,
+                    "memory_used": 40,
+                    "memory_total": 40,
+                    "gpu_utilization": 60,
+                }
+            ],
+            "timestamp": datetime.now().isoformat(),
+        },
+    ]
+    gpu_data_collection.insert_many(gpu_data)
+    return gpu_data_collection
+
+
+@pytest.fixture
+def overview_data_db():
+    """
+    Setup overview data collection.
+    """
+    overview_collection = db["overview_data"]
+    overview_data = [
+        {
+            "hostname": "server1",
+            "gpu_data": [
+                {
+                    "percentage": 90,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 80,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 70,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 60,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 50,
+                    "timestamp": datetime.now().isoformat(),
+                },
+            ],
+            "percentage": {"percentage": 80, "timestamp": datetime.now().isoformat()},
+            "active_users": 1,
+        },
+        {
+            "hostname": "server2",
+            "gpu_data": [
+                {
+                    "percentage": 90,
+                    "timestamp": datetime.now().isoformat(),
+                },
+                {
+                    "percentage": 80,
+                    "timestamp": datetime.now().isoformat(),
+                },
+            ],
+            "percentage": {"percentage": 80, "timestamp": datetime.now().isoformat()},
+            "active_users": 1,
+        },
+    ]
+    overview_collection.insert_many(overview_data)
+    return overview_collection
 
 
 @pytest.fixture

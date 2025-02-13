@@ -1,21 +1,74 @@
 name: GPacAPI FastAPI CD
-'on':
+
+on:
   push:
     branches:
       - master
+      - develop
+    tags:
+      - v*
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
       - name: Login to Docker Hub
         uses: docker/login-action@v3
         with:
           username: '${{ vars.DOCKERHUB_USERNAME }}'
           password: '${{ secrets.DOCKERHUB_TOKEN }}'
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Extract metadata (tags, labels)
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ vars.DOCKERHUB_USERNAME }}/gpac-api
+          tags: |
+            type=ref,event=branch
+            type=ref,event=tag
+            type=sha
+
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: '${{ vars.DOCKERHUB_USERNAME }}/gpac-api:0.1.0'
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Install Ansible
+        run: sudo apt update && sudo apt install -y ansible
+
+      - name: Set Up SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.REMOTE_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Set Up SSH Public Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PUBLIC_KEY }}" > ~/.ssh/id_rsa.pub
+            chmod 644 ~/.ssh/id_rsa.pub
+
+      - name: Run Ansible Playbook
+        uses: dawidd6/action-ansible-playbook@v3
+        with:
+          playbook: playbooks/deploy-dev-playbook.yml
+          inventory: |
+            [web]
+            ${{ secrets.REMOTE_HOST }} ansible_user=${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          options: |
+            --extra-vars database_user=${{ secrets.DATABASE_USER }}
+            --extra-vars database_password=${{ secrets.DATABASE_PASSWORD }}
+            --extra-vars database_domain=${{ secrets.DATABASE_DOMAIN }}
+            --extra-vars database_app_name=${{ secrets.DATABASE_APP_NAME }}
+            --extra-vars database_client=${{ secrets.DATABASE_CLIENT }}
