@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """handle CRUD operations for overview data model."""
 from typing import Optional
-from src.gpac_api.app.models.overview import OverviewModel
 from src.gpac_api.app.schemas.overview import (
     OverviewCreateSchema,
     OverviewResponseSchema,
@@ -10,7 +9,7 @@ from src.gpac_api.app.db.database import db
 from src.gpac_api.app.utils.converters import convert_object_ids
 
 
-def create_overview(overview_data: OverviewCreateSchema) -> OverviewModel:
+def create_overview(overview_data: OverviewCreateSchema) -> OverviewResponseSchema:
     """
     Creates a new overview entry in the database.
 
@@ -18,7 +17,7 @@ def create_overview(overview_data: OverviewCreateSchema) -> OverviewModel:
         overview_data (OverviewCreateSchema)
 
     Returns:
-        OverviewModel
+        OverviewResponseSchema
     """
     collection = db.overview_data
     document = overview_data.model_dump()

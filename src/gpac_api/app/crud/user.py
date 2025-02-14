@@ -4,10 +4,10 @@
 from fastapi.security import HTTPBasicCredentials
 
 from src.gpac_api.app.db.database import db
-from src.gpac_api.app.models.user import UserModel
+from src.gpac_api.app.schemas.user import UserResponseSchema
 
 
-def find_user(credentials: HTTPBasicCredentials) -> UserModel:
+def find_user(credentials: HTTPBasicCredentials) -> UserResponseSchema:
     """
     Retrieve a user from the database based on provided credentials.
 
@@ -16,7 +16,7 @@ def find_user(credentials: HTTPBasicCredentials) -> UserModel:
  containing the username to search for.
 
     Returns:
-        UserModel: The user document if found, otherwise None.
+        UserResponseSchema: The user document if found, otherwise None.
     """
     collection = db.user
     return collection.find_one({"username": credentials.username})
