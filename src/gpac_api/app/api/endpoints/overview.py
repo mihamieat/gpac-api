@@ -6,7 +6,6 @@ from fastapi import APIRouter, Depends, Query
 from fastapi.security import HTTPBasicCredentials
 
 from src.gpac_api.app.crud.overview import create_overview, get_latest_overview
-from src.gpac_api.app.models.overview import OverviewModel
 from src.gpac_api.app.schemas.overview import (
     OverviewCreateSchema,
     OverviewResponseSchema,
@@ -17,7 +16,7 @@ from src.gpac_api.app.utils.security import verify_credentials, security
 router = APIRouter()
 
 
-@router.post("/", response_model=OverviewModel)
+@router.post("/", response_model=OverviewResponseSchema)
 def new_overview(
     overview: OverviewCreateSchema,
     credentials: Annotated[HTTPBasicCredentials, Depends(security)],

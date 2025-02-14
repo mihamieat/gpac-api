@@ -5,9 +5,9 @@ from bson import ObjectId
 from pydantic import BaseModel
 
 
-class UserModel(BaseModel):
+class UserResponseSchema(BaseModel):
     """
-    UserModel represents a user in the application with essential attributes.
+    UserResponseSchema represents a user in the application with essential attributes.
 
     Attributes:
         username (str): The unique identifier for the user.
