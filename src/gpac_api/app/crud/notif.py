@@ -25,11 +25,10 @@ def create_notif(notif: NotifResponseSchema) -> NotifResponseSchema:
     """
 
     collection = db.notif
-    new_notif = collection.insert_one(notif.model_dump())
-    created_notif = collection.find_one({"_id": new_notif.inserted_id})
-    created_item_dict = convert_object_ids(created_notif)
-    logger.debug("Created notif: %s", created_item_dict)
-    return created_item_dict
+    document = notif.model_dump()
+    new_notif = collection.insert_one(document)
+    document["_id"] = new_notif.inserted_id
+    return convert_object_ids(document)
 
 
 def find_notif(notif_id: str) -> NotifResponseSchema:

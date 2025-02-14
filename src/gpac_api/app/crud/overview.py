@@ -21,7 +21,7 @@ def create_overview(overview_data: OverviewCreateSchema) -> OverviewResponseSche
     """
     collection = db.overview_data
     document = overview_data.model_dump()
-    new_overview_data = collection.insert_one(overview_data.model_dump())
+    new_overview_data = collection.insert_one(document)
     document["_id"] = new_overview_data.inserted_id
     return convert_object_ids(document)
 
