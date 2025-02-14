@@ -21,9 +21,10 @@ def create_gpu_data(gpu_data: GPUDataResponseListSchema) -> GPUDataResponseSchem
         GPUDataResponseSchema
     """
     collection = db.gpu_data
-    new_gpu_data = collection.insert_one(gpu_data.model_dump())
-    created_gpu_data = collection.find_one({"_id": new_gpu_data.inserted_id})
-    return convert_object_ids(created_gpu_data)
+    document = gpu_data.model_dump()
+    new_gpu_data = collection.insert_one(document)
+    document["_id"] = new_gpu_data.inserted_id
+    return convert_object_ids(document)
 
 
 def get_gpu_data_by_time_interval(
