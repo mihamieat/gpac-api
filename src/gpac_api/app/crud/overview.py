@@ -4,6 +4,7 @@ from typing import Optional
 from src.gpac_api.app.schemas.overview import (
     OverviewCreateSchema,
     OverviewResponseSchema,
+    HostnamesResponseSchema,
 )
 from src.gpac_api.app.db.database import db
 from src.gpac_api.app.utils.converters import convert_object_ids
@@ -43,3 +44,15 @@ def get_latest_overview(hostname: str) -> Optional[OverviewResponseSchema]:
     if latest_overview_list := list(latest_overview_data):
         return convert_object_ids(latest_overview_list[0])
     return None
+
+
+def get_all_hostnames() -> HostnamesResponseSchema:
+    """
+    Retrieves all unique hostnames from the overview data.
+
+    Returns:
+        List[str]: A list of unique hostnames.
+    """
+    collection = db.overview_data
+    results = list(collection.distinct("hostname"))
+    return HostnamesResponseSchema(hostnames=results)
