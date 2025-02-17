@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
 """handle CRUD operations for overview data model."""
 from typing import Optional
+
+from fastapi import HTTPException
+
 from src.gpac_api.app.schemas.overview import (
     OverviewCreateSchema,
     OverviewResponseSchema,
@@ -56,3 +59,42 @@ def get_all_hostnames() -> HostnamesResponseSchema:
     collection = db.overview_data
     results = list(collection.distinct("hostname"))
     return HostnamesResponseSchema(hostnames=results)
+
+
+def add_to_custom_hostname_list(hostname: str) -> HostnamesResponseSchema:
+    """Adds a hostname to a custom list in the database."""
+
+    if hostname not in get_all_hostnames().hostnames:
+        raise HTTPException(status_code=404, detail="Invalid hostname")
+
+    collection = db.custom_hostnames
+    if not collection.find_one({"hostname": hostname}):
+        document = {"hostname": hostname}
+        document["_id"] = collection.insert_one(document).inserted_id
+
+    return HostnamesResponseSchema(hostnames=[hostname])
+
+
+def get_custom_hostname_list() -> HostnamesResponseSchema:
+    """
+    Retrieves the custom hostname list from the database.
+
+    Returns:
+        HostnamesResponseSchema
+    """
+    collection = db.custom_hostnames
+    results = list(collection.find())
+    return HostnamesResponseSchema(hostnames=[result["hostname"] for result in results])
+
+
+def del_hostname_from_custom_list(hostname: str) -> HostnamesResponseSchema:
+    """
+    Removes a hostname from the custom list in the database.
+
+    Returns:
+        HostnamesResponseSchema
+    """
+    collection = db.custom_hostnames
+    if not collection.find_one({"hostname": hostname}):
+        raise HTTPException(status_code=404, detail="Invalid hostname")
+    collection.delete_one({"hostname": hostname})
