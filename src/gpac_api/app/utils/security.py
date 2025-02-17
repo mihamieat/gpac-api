@@ -37,3 +37,10 @@ def verify_credentials(
             detail="Incorrect username or password",
             headers={"WWW-Authenticate": "Basic"},
         )
+
+
+def require_credentials(
+    credentials: Annotated[HTTPBasicCredentials, Depends(security)]
+):
+    """Require credentials function"""
+    verify_credentials(credentials)
