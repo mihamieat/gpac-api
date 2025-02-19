@@ -26,4 +26,5 @@
           DATABASE_DOMAIN: "{{ database_domain }}"
           DATABASE_APP_NAME: "{{ database_app_name }}"
           DATABASE_CLIENT: "{{ database_client }}"
+          FRONTEND_ORIGIN: "{{ frontend_origin }}"
         restart_policy: always
