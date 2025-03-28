@@ -6,6 +6,35 @@ All notable changes to this project will be documented in this file.
 
 ### 🚀 Features
 
+- Get all hosname list for overview #37
+- Add custom hostname list endpoint #39
+
+### 🐛 Bug Fixes
+
+- Enable CORS supoort for configured origins #42
+- Add missing connection string variable
+
+### 🚜 Refactor
+
+- Quit using models #21
+- Reduce crud operations complexity #19
+- Simplify db connection string
+- Reduce database calls for finding hostnames
+
+### 📚 Documentation
+
+- Update Readme
+
+### ⚙️ Miscellaneous Tasks
+
+- *(test)* Update coverage
+- Re-integrate code coverage results
+- Remove deleted directory in bumbversion inventory
+
+## [0.2.0-dev] - 2025-02-13
+
+### 🚀 Features
+
 - Add support for loading environment variables
 - Add delete message
 - Enable find all notifications
@@ -39,6 +68,7 @@ All notable changes to this project will be documented in this file.
 
 - Add active users field in post overview
 - *(ci)* Include bugfix branches to trigger CI actions
+- Update changelog
 
 ## [0.1.0-dev] - 2024-08-29
 
