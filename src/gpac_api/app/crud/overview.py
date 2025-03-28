@@ -63,8 +63,7 @@ def get_all_hostnames() -> HostnamesResponseSchema:
 
 def add_to_custom_hostname_list(hostname: str) -> HostnamesResponseSchema:
     """Adds a hostname to a custom list in the database."""
-
-    if hostname not in get_all_hostnames().hostnames:
+    if not db.overview_data.find_one({"hostname": hostname}):
         raise HTTPException(status_code=404, detail="Invalid hostname")
 
     collection = db.custom_hostnames
