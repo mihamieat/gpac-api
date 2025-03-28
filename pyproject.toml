@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gpac-api"
-version = "0.2.0-dev"
+version = "0.3.0-dev"
 description = ""
 authors = ["Mihamina Rakotovazaha <r.miham@yahoo.com>", "Stephane Vusasinovic stephane.vujasinovic@gmail.com"]
 readme = "README.md"
