@@ -14,7 +14,7 @@ from src.gpac_api.app.schemas.gpu_data import (
     GPUDataResponseSchema,
     GPUDataResponseListSchema,
 )
-from src.gpac_api.app.models.date_models import DateRangeModel
+from src.gpac_api.app.schemas.date import DateRangeSchema
 from src.gpac_api.app.utils.security import verify_credentials, security
 
 router = APIRouter()
@@ -68,7 +68,7 @@ def get_gpu_data(
     verify_credentials(credentials)
     try:
         return get_gpu_data_by_time_interval(
-            DateRangeModel(start_date=start_date, end_date=end_date)
+            DateRangeSchema(start_date=start_date, end_date=end_date)
         )
     except ValueError as e:
         raise HTTPException(status_code=400, detail="Invalid datetime format") from e

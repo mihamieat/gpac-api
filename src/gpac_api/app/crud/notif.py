@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """handle CRUD operations for notif model. """
 
-from src.gpac_api.app.models.notif import NotifModel
 from src.gpac_api.app.schemas.notif import NotifResponseSchema, NotifResponseListSchema
 from src.gpac_api.app.db.database import db
 from src.gpac_api.app.utils.logger import logger
@@ -11,12 +10,12 @@ from src.gpac_api.app.utils.converters import (
 )
 
 
-def create_notif(notif: NotifModel) -> NotifResponseSchema:
+def create_notif(notif: NotifResponseSchema) -> NotifResponseSchema:
     """
     Creates a new notification in the database.
 
     Args:
-        notif (NotifModel).
+        notif (NotifResponseSchema).
 
     Returns:
         NotifResponseSchema: The response schema representing the created notification.
@@ -26,11 +25,10 @@ def create_notif(notif: NotifModel) -> NotifResponseSchema:
     """
 
     collection = db.notif
-    new_notif = collection.insert_one(notif.model_dump())
-    created_notif = collection.find_one({"_id": new_notif.inserted_id})
-    created_item_dict = convert_object_ids(created_notif)
-    logger.debug("Created notif: %s", created_item_dict)
-    return created_item_dict
+    document = notif.model_dump()
+    new_notif = collection.insert_one(document)
+    document["_id"] = new_notif.inserted_id
+    return convert_object_ids(document)
 
 
 def find_notif(notif_id: str) -> NotifResponseSchema:

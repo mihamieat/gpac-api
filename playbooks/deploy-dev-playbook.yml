@@ -21,9 +21,7 @@
         ports:
           - 80:80
         env:
-          DATABASE_USER: "{{ database_user }}"
-          DATABASE_PASSWORD: "{{ database_password }}"
-          DATABASE_DOMAIN: "{{ database_domain }}"
-          DATABASE_APP_NAME: "{{ database_app_name }}"
           DATABASE_CLIENT: "{{ database_client }}"
+          FRONTEND_ORIGIN: "{{ frontend_origin }}"
+          DATABASE_CONNECTION_STRING: "{{ database_connection_string }}"
         restart_policy: always

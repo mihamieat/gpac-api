@@ -38,3 +38,11 @@ class OverviewResponseSchema(BaseModel):
     gpu_data: List[PercentageDataSchema]
     percentage: PercentageDataSchema
     active_users: int
+
+
+class HostnamesResponseSchema(BaseModel):
+    """Schema for retrieving hostnames.
+    Represents the structure for retrieving hostnames.
+    """
+
+    hostnames: List[str]

@@ -67,8 +67,6 @@ jobs:
             ${{ secrets.REMOTE_HOST }} ansible_user=${{ secrets.REMOTE_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           options: |
-            --extra-vars database_user=${{ secrets.DATABASE_USER }}
-            --extra-vars database_password=${{ secrets.DATABASE_PASSWORD }}
-            --extra-vars database_domain=${{ secrets.DATABASE_DOMAIN }}
-            --extra-vars database_app_name=${{ secrets.DATABASE_APP_NAME }}
             --extra-vars database_client=${{ secrets.DATABASE_CLIENT }}
+            --extra-vars frontend_origin=${{ secrets.FRONTEND_ORIGIN }}
+            --extra-vars database_connection_string=${{ secrets.DATABASE_CONNECTION_STRING }}

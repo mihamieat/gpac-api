@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""date models."""
+"""date schemas."""
 
 from datetime import datetime
 from typing import Optional
@@ -7,7 +7,7 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 
-class DateRangeModel(BaseModel):
+class DateRangeSchema(BaseModel):
     """
     Represents a model for a range of dates
 
