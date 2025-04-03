@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Gpac API main module."""
 
+
 import os
 
 from dotenv import load_dotenv, dotenv_values
@@ -13,11 +14,14 @@ from src.gpac_api.app.api.endpoints import notif, gpu_data, overview
 
 load_dotenv()
 dotenv_config = dotenv_values()
-FRONTEND_ORIGIN = os.getenv("FRONTEND_ORIGIN", dotenv_config.get("FRONTEND_ORIGIN"))
+FRONTEND_ORIGIN = (
+    os.getenv("FRONTEND_ORIGIN", dotenv_config.get("FRONTEND_ORIGIN")) or ""
+)
+frontend_origin_list = list(filter(None, FRONTEND_ORIGIN.split(",")))
 
 app = FastAPI(lifespan=lifespan)
 
-origins = list(filter(None, ["http://localhost:3000", FRONTEND_ORIGIN]))
+origins = ["http://localhost:3000"] + frontend_origin_list
 
 app.add_middleware(
     CORSMiddleware,

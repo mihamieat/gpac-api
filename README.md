@@ -22,7 +22,7 @@ The following environment variables are required for running the API:
 |-------------------------|----------------------------------------------------------------|
 | `DATABASE_CLIENT`               | The name or identifier for the database client being used for the connection.                           |
 | `DATABASE_CONNECTION_STRING`    | The full MongoDB connection string used to connect to the database, including credentials, server address, etc. |
-| `FRONTEND_ORIGIN`               | The origin (URL) of the frontend application, the location where the frontend is hosted.      |
+| `FRONTEND_ORIGIN`               | The origin (URL) of the frontend application, the location where the frontend is hosted. Multiple values can be added separated with a comma     |
 
 ## Installation
 It is recommended to run the server in a separate environment.
